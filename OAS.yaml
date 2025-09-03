@@ -1,9 +1,83 @@
 openapi: 3.1.0
 info:
-  title: $Title$
-  description: $Title$
+  title: STD24026
+  description: This is a specification of STD24026
   version: 1.0.0
 servers:
-  - url: '$https$'
+  - url: 'https://localhost:8000'
 paths:
-  $END$
+  /health:
+    get:
+      responses:
+        "200":
+          description: Ok
+          content:
+            text/plain:
+              schema:
+                type: String
+
+  /phones:
+    post:
+      responses:
+        "201":
+          description: Phone created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Phone"
+    get:
+      responses:
+        "200":
+          description: List of phones
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Phone"
+
+  /phones/{id}:
+    get:
+      parameters:
+        - $ref: "#/components/parameters/identifier"
+      responses:
+        "200":
+          description: Phone found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Phone"
+        "404":
+          description: User not found
+
+components:
+  parameters:
+    identifier:
+      name: identifier
+      in: path
+      required: true
+      schema:
+        type: string
+  schemas:
+    Phone:
+      type: object
+      properties:
+        identifier:
+          type: string
+        brand:
+          type: string
+        model:
+          type: string
+        characteristics:
+          type: Characteristic
+      example:
+        identifier: 1
+        brand: LG
+        model: V60
+        characteristic:
+    Characteristic:
+      type: object
+      properties:
+        ram_memory:
+          type: integer
+        rom_memory:
+          type: integer
+  

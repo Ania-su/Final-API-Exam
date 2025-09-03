@@ -16,7 +16,7 @@ class Characteristic(BaseModel):
     rom_memory: int
 
 class Phone(BaseModel):
-    identifier : int
+    identifier : str
     brand : str
     model : str
     characteristics : Characteristic
