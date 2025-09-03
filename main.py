@@ -2,6 +2,7 @@ from typing import List
 
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
+from starlette import status
 from starlette.responses import Response
 
 app = FastAPI()
@@ -22,7 +23,7 @@ class Phone(BaseModel):
 
 phones : List[Phone] = []
 
-@app.post("/phones")
+@app.post("/phones", status_code=status.HTTP_201_CREATED)
 def create_phone(new_phone: List[Phone]):
     phones.extend(new_phone)
     return phones
